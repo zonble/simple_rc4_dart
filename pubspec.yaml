@@ -1,11 +1,11 @@
 name: simple_rc4
 description: Yet another RC4 encryptor
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/zonble/simple_rc4_dart
 author: zonble <zonble@gmail.com>
 
 environment:
-  sdk: '>=2.0.0-dev.66.0 <2.0.0'
+  sdk: '>=2.0.0 <2.0.0-dev.66.0'
 
 # dependencies:
 #   cryptoutils: "^0.3.0"

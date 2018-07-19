@@ -5,10 +5,7 @@ homepage: https://github.com/zonble/simple_rc4_dart
 author: zonble <zonble@gmail.com>
 
 environment:
-  sdk: '>=2.0.0 <2.0.0-dev.66.0'
-
-# dependencies:
-#   cryptoutils: "^0.3.0"
+  sdk: '>=2.0.0-dev.66.0 <2.0.0'
 
 dev_dependencies:
   test: ^1.0.0

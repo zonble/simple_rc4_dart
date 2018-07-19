@@ -1,6 +1,6 @@
 name: simple_rc4
 description: Yet another RC4 encryptor
-version: 0.0.2
+version: 0.1.0
 homepage: https://github.com/zonble/simple_rc4_dart
 author: zonble <zonble@gmail.com>
 

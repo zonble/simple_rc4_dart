@@ -1,3 +1,7 @@
-## 1.0.0
+## 0.1.2
 
-- Initial version, created by Stagehand
+- Supprts Dart 2.
+
+## 0.1.1
+
+- Initial version.

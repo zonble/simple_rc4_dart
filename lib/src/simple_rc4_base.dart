@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+/// The RC4 encryptor.
 class RC4 {
   String _key;
   List<int> _box;
@@ -38,16 +39,28 @@ class RC4 {
     return out;
   }
 
+  /// Encodes bytes via RC4 encryption.
+  ///
+  /// However, actually calling [RC4.encodeBytes()] and [RC4.decodeBytes()] will
+  /// give the same result.
   List<int> encodeBytes(List<int> bytes) {
     List<int> crypted = _crypt(bytes);
     return crypted;
   }
 
+  /// Decodes bytes via RC4 encryption.
+  ///
+  /// However, actually calling [RC4.encodeBytes()] and [RC4.decodeBytes()] will
+  /// give the same result.
   String decodeBytes(List<int> bytes) {
     List<int> crypted = _crypt(bytes);
     return utf8.decode(crypted);
   }
 
+  /// Encodes a string into another string via RC4 encryption.
+  ///
+  /// [encodeBase64] represents if the result should be base64 encoded. The
+  /// method uses UTF-8 text encoding when converting strings to binary data.
   String encodeString(String message, [bool encodeBase64 = true]) {
     List<int> crypted = _crypt(utf8.encode(message));
 
@@ -58,6 +71,10 @@ class RC4 {
     return utf8.decode(crypted);
   }
 
+  /// Decodes a string into the original one via RC4 encryption.
+  ///
+  /// [encodeBase64] represents if the input is base64 encoded. The method uses
+  /// UTF-8 text encoding when converting strings to binary data.
   String decodeString(String message, [bool encodedBase64 = true]) {
     if (encodedBase64) {
       List<int> bytes = base64.decode(message).toList();

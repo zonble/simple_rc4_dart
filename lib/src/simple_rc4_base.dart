@@ -4,8 +4,9 @@ import 'dart:convert';
 class RC4 {
   String _key;
   List<int> _box;
-  int i = 0, j = 0;
+  int _i = 0, _j = 0;
 
+  /// Creates a new instance by passing a key.
   RC4(String this._key) {
     this._makeBox();
   }
@@ -30,10 +31,10 @@ class RC4 {
     List<int> out = <int>[];
 
     for (int char in message) {
-      this.i = (this.i + 1) % 256;
-      this.j = (this.j + _box[this.i]) % 256;
-      _swap(this._box, this.i, this.j);
-      int c = char ^ (_box[(_box[this.i] + _box[this.j]) % 256]);
+      this._i = (this._i + 1) % 256;
+      this._j = (this._j + _box[this._i]) % 256;
+      _swap(this._box, this._i, this._j);
+      final int c = char ^ (_box[(_box[this._i] + _box[this._j]) % 256]);
       out.add(c);
     }
     return out;

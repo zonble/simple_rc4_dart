@@ -1,7 +1,11 @@
-## 0.1.2
+## 0.1.03
 
-- Supprts Dart 2.
+- Fixes typos.
 
-## 0.1.1
+## 0.1.02
+
+- Supports Dart 2.
+
+## 0.1.01
 
 - Initial version.

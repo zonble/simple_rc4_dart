@@ -1,13 +1,16 @@
 import 'dart:convert';
 
-/// The RC4 encryptor.
+/// A simple RC4 encryptor.
+///
+/// To use the class, just create an instance of it, and then call methods such
+/// as [RC4.encodeBytes], [RC4.decodeBytes] and so on.
 class RC4 {
-  String _key;
+  final String key;
   List<int> _box;
   int _i = 0, _j = 0;
 
-  /// Creates a new instance by passing a key.
-  RC4(String this._key) {
+  /// Creates a new instance by passing a given [key].
+  RC4(String this.key) {
     this._makeBox();
   }
 
@@ -15,16 +18,16 @@ class RC4 {
     int x = 0;
     List<int> box = new List.generate(256, (i) => i);
     for (int i = 0; i < 256; i++) {
-      x = (x + box[i] + this._key.codeUnitAt(i % this._key.length)) % 256;
+      x = (x + box[i] + this.key.codeUnitAt(i % this.key.length)) % 256;
       _swap(box, i, x);
     }
     this._box = box;
   }
 
-  _swap(List<int> S, int i, int j) {
-    var tmp = S[i];
-    S[i] = S[j];
-    S[j] = tmp;
+  _swap(List<int> list, int i, int j) {
+    var tmp = list[i];
+    list[i] = list[j];
+    list[j] = tmp;
   }
 
   List<int> _crypt(List<int> message) {
@@ -42,7 +45,7 @@ class RC4 {
 
   /// Encodes bytes via RC4 encryption.
   ///
-  /// However, actually calling [RC4.encodeBytes()] and [RC4.decodeBytes()] will
+  /// However, actually calling [RC4.encodeBytes] and [RC4.decodeBytes] will
   /// give the same result.
   List<int> encodeBytes(List<int> bytes) {
     List<int> crypted = _crypt(bytes);
@@ -51,7 +54,7 @@ class RC4 {
 
   /// Decodes bytes via RC4 encryption.
   ///
-  /// However, actually calling [RC4.encodeBytes()] and [RC4.decodeBytes()] will
+  /// However, actually calling [RC4.encodeBytes] and [RC4.decodeBytes] will
   /// give the same result.
   String decodeBytes(List<int> bytes) {
     List<int> crypted = _crypt(bytes);
@@ -60,8 +63,12 @@ class RC4 {
 
   /// Encodes a string into another string via RC4 encryption.
   ///
-  /// [encodeBase64] represents if the result should be base64 encoded. The
-  /// method uses UTF-8 text encoding when converting strings to binary data.
+  /// Please note that the method uses UTF-8 text encoding when converting
+  /// strings to binary data. If you want to use another string encoding, please
+  /// convert your string into bytes using your own encoding and pass your data
+  /// to [RC4.encodeBytes].
+  ///
+  /// [encodeBase64] represents if the result should be base64 encoded.
   String encodeString(String message, [bool encodeBase64 = true]) {
     List<int> crypted = _crypt(utf8.encode(message));
 
@@ -74,8 +81,12 @@ class RC4 {
 
   /// Decodes a string into the original one via RC4 encryption.
   ///
-  /// [encodeBase64] represents if the input is base64 encoded. The method uses
-  /// UTF-8 text encoding when converting strings to binary data.
+  /// Please note that the method uses UTF-8 text encoding when converting
+  /// strings to binary data. If you want to use another string encoding, please
+  /// convert your string into bytes using your own encoding and pass your data
+  /// to [RC4.decodeBytes].
+  ///
+  /// [encodeBase64] represents if the input is base64 encoded.
   String decodeString(String message, [bool encodedBase64 = true]) {
     if (encodedBase64) {
       List<int> bytes = base64.decode(message).toList();

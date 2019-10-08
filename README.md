@@ -1,5 +1,7 @@
 # simple_rc4
 
+[![Actions Status](https://github.com/zonble/simple_rc4_dart/workflows/Dart%20CI/badge.svg)](https://github.com/zonble/simple_rc4_dart/actions)
+
 Yet another RC4 cryptor that encodes/decodes bytes and UTF8 strings.
 
 ## Usage

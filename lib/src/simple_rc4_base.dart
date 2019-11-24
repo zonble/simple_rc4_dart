@@ -5,23 +5,32 @@ import 'dart:convert';
 /// To use the class, just create an instance of it, and then call methods such
 /// as [RC4.encodeBytes], [RC4.decodeBytes] and so on.
 class RC4 {
-  final String key;
+  /// The key.
+  List<int> get key => _key;
+  List<int> _key;
   List<int> _box;
   int _i = 0, _j = 0;
 
   /// Creates a new instance by passing a given [key].
-  RC4(String this.key) {
-    this._makeBox();
+  RC4(String key) {
+    _key = utf8.encode(key);
+    _makeBox();
+  }
+
+  /// Creates a new instance by passing a given [key].
+  RC4.fromBytes(List<int> key) {
+    _key = key;
+    _makeBox();
   }
 
   void _makeBox() {
     int x = 0;
-    List<int> box = new List.generate(256, (i) => i);
+    List<int> box = List.generate(256, (i) => i);
     for (int i = 0; i < 256; i++) {
-      x = (x + box[i] + this.key.codeUnitAt(i % this.key.length)) % 256;
+      x = (x + box[i] + _key[i % _key.length]) % 256;
       _swap(box, i, x);
     }
-    this._box = box;
+    _box = box;
   }
 
   _swap(List<int> list, int i, int j) {
@@ -34,10 +43,10 @@ class RC4 {
     List<int> out = <int>[];
 
     for (int char in message) {
-      this._i = (this._i + 1) % 256;
-      this._j = (this._j + _box[this._i]) % 256;
-      _swap(this._box, this._i, this._j);
-      final int c = char ^ (_box[(_box[this._i] + _box[this._j]) % 256]);
+      _i = (_i + 1) % 256;
+      _j = (_j + _box[_i]) % 256;
+      _swap(_box, _i, _j);
+      final int c = char ^ (_box[(_box[_i] + _box[_j]) % 256]);
       out.add(c);
     }
     return out;
@@ -47,19 +56,13 @@ class RC4 {
   ///
   /// However, actually calling [RC4.encodeBytes] and [RC4.decodeBytes] will
   /// give the same result.
-  List<int> encodeBytes(List<int> bytes) {
-    List<int> crypted = _crypt(bytes);
-    return crypted;
-  }
+  List<int> encodeBytes(List<int> bytes) => _crypt(bytes);
 
   /// Decodes bytes via RC4 encryption.
   ///
   /// However, actually calling [RC4.encodeBytes] and [RC4.decodeBytes] will
   /// give the same result.
-  String decodeBytes(List<int> bytes) {
-    List<int> crypted = _crypt(bytes);
-    return utf8.decode(crypted);
-  }
+  String decodeBytes(List<int> bytes) => utf8.decode(_crypt(bytes));
 
   /// Encodes a string into another string via RC4 encryption.
   ///
@@ -71,12 +74,7 @@ class RC4 {
   /// [encodeBase64] represents if the result should be base64 encoded.
   String encodeString(String message, [bool encodeBase64 = true]) {
     List<int> crypted = _crypt(utf8.encode(message));
-
-    if (encodeBase64) {
-      String string = base64.encode(crypted);
-      return string;
-    }
-    return utf8.decode(crypted);
+    return encodeBase64 ? base64.encode(crypted) : utf8.decode(crypted);
   }
 
   /// Decodes a string into the original one via RC4 encryption.

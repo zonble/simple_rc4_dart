@@ -1,3 +1,7 @@
+## 0.1.6
+
+- Adopts modern Dart syntax.
+
 ## 0.1.03
 
 - Fixes typos.

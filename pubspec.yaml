@@ -1,6 +1,6 @@
 name: simple_rc4
 description: Yet another RC4 cryptor that encodes/decodes bytes and UTF8 strings.
-version: 0.1.5
+version: 0.1.6
 homepage: https://github.com/zonble/simple_rc4_dart
 author: zonble <zonble@gmail.com>
 

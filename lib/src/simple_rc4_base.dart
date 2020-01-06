@@ -24,29 +24,29 @@ class RC4 {
   }
 
   void _makeBox() {
-    int x = 0;
-    List<int> box = List.generate(256, (i) => i);
-    for (int i = 0; i < 256; i++) {
+    var x = 0;
+    var box = List.generate(256, (i) => i);
+    for (var i = 0; i < 256; i++) {
       x = (x + box[i] + _key[i % _key.length]) % 256;
       _swap(box, i, x);
     }
     _box = box;
   }
 
-  _swap(List<int> list, int i, int j) {
+  void _swap(List<int> list, int i, int j) {
     var tmp = list[i];
     list[i] = list[j];
     list[j] = tmp;
   }
 
   List<int> _crypt(List<int> message) {
-    List<int> out = <int>[];
+    var out = <int>[];
 
-    for (int char in message) {
+    for (var char in message) {
       _i = (_i + 1) % 256;
       _j = (_j + _box[_i]) % 256;
       _swap(_box, _i, _j);
-      final int c = char ^ (_box[(_box[_i] + _box[_j]) % 256]);
+      final c = char ^ (_box[(_box[_i] + _box[_j]) % 256]);
       out.add(c);
     }
     return out;
@@ -73,7 +73,7 @@ class RC4 {
   ///
   /// [encodeBase64] represents if the result should be base64 encoded.
   String encodeString(String message, [bool encodeBase64 = true]) {
-    List<int> crypted = _crypt(utf8.encode(message));
+    var crypted = _crypt(utf8.encode(message));
     return encodeBase64 ? base64.encode(crypted) : utf8.decode(crypted);
   }
 
@@ -87,12 +87,12 @@ class RC4 {
   /// [encodeBase64] represents if the input is base64 encoded.
   String decodeString(String message, [bool encodedBase64 = true]) {
     if (encodedBase64) {
-      List<int> bytes = base64.decode(message).toList();
-      List<int> crypted = _crypt(bytes);
+      var bytes = base64.decode(message);
+      var crypted = _crypt(bytes);
       return utf8.decode(crypted);
     }
 
-    List<int> decrypted = _crypt(utf8.encode(message));
+    var decrypted = _crypt(utf8.encode(message));
     return utf8.decode(decrypted);
   }
 }

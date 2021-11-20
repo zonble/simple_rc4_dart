@@ -7,8 +7,8 @@ import 'dart:convert';
 class RC4 {
   /// The key.
   List<int> get key => _key;
-  List<int> _key;
-  List<int> _box;
+  late List<int> _key;
+  late List<int> _box;
   int _i = 0, _j = 0;
 
   /// Creates a new instance by passing a given [key].

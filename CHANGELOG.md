@@ -1,3 +1,7 @@
+## 0.2.0
+
+- Supports null safety.
+
 ## 0.1.6
 
 - Adopts modern Dart syntax.

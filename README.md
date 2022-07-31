@@ -2,7 +2,11 @@
 
 [![Actions Status](https://github.com/zonble/simple_rc4_dart/workflows/Dart%20CI/badge.svg)](https://github.com/zonble/simple_rc4_dart/actions)
 
-Yet another RC4 cryptor that encodes/decodes bytes and UTF8 strings.
+RC4 cryptor that encodes/decodes bytes and UTF8 strings.
+
+Credit to https://github.com/zonble the original creator of this library.
+
+The only difference: this handels mal formed list in decoding, by adding a default parameter {[bool](https://api.dart.dev/be/181224/dart-core/bool-class.html)? allowMalformed} to the decoding function that allows mal formed List to prevent FormatException: Unexpected extension byte...
 
 ## Usage
 

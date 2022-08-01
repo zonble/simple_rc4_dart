@@ -62,7 +62,7 @@ class RC4 {
   ///
   /// However, actually calling [RC4.encodeBytes] and [RC4.decodeBytes] will
   /// give the same result.
-  String decodeBytes(List<int> bytes) => utf8.decode(_crypt(bytes));
+  String decodeBytes(List<int> bytes, [bool allowMalformed=false]) => utf8.decode(_crypt(bytes), allowMalformed:allowMalformed);
 
   /// Encodes a string into another string via RC4 encryption.
   ///
@@ -85,14 +85,14 @@ class RC4 {
   /// to [RC4.decodeBytes].
   ///
   /// [encodeBase64] represents if the input is base64 encoded.
-  String decodeString(String message, [bool encodedBase64 = true]) {
+  String decodeString(String message, [bool encodedBase64 = true, allowMalformed=false]) {
     if (encodedBase64) {
       var bytes = base64.decode(message);
       var crypted = _crypt(bytes);
-      return utf8.decode(crypted);
+      return utf8.decode(crypted, allowMalformed: allowMalformed);
     }
 
     var decrypted = _crypt(utf8.encode(message));
-    return utf8.decode(decrypted);
+    return utf8.decode(decrypted, allowMalformed: allowMalformed);
   }
 }

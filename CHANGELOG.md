@@ -1,3 +1,7 @@
+## 0.3.0
+
+- Allow malformed.
+
 ## 0.2.0
 
 - Supports null safety.
